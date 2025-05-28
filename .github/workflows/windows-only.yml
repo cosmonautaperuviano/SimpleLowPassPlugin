@@ -1,0 +1,37 @@
+name: Build Windows VST3 Only
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msbuild@v2
+    
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v1.14
+      with:
+        cmake-version: '3.15'
+    
+    - name: Configure CMake
+      run: cmake -B build -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release
+    
+    - name: Build
+      run: cmake --build build --config Release
+    
+    - name: Upload Windows VST3
+      uses: actions/upload-artifact@v4
+      with:
+        name: SimpleLowPass-Windows-VST3
+        path: build/SimpleLowPassPlugin_artefacts/VST3/SimpleLowPass.vst3 
