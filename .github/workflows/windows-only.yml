@@ -22,7 +22,7 @@ jobs:
     - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v1.14
       with:
-        cmake-version: '3.15'
+        cmake-version: '3.22'
     
     - name: Configure CMake
       run: cmake -B build -G "Visual Studio 16 2019" -A x64
