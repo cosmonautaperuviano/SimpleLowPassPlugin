@@ -30,8 +30,17 @@ jobs:
     - name: Build
       run: cmake --build build --config Release
     
+    - name: List build contents
+      run: |
+        echo "=== Build directory contents ==="
+        dir build /s
+        echo "=== Looking for VST3 files ==="
+        dir build\*.vst3 /s
+    
     - name: Upload Windows VST3
       uses: actions/upload-artifact@v4
       with:
         name: SimpleLowPass-Windows-VST3
-        path: build/SimpleLowPassPlugin_artefacts/VST3/SimpleLowPass.vst3 
+        path: |
+          build/**/SimpleLowPass.vst3
+          build/**/*.vst3 
