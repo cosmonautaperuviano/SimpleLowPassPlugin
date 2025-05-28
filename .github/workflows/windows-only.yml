@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2019
     
     steps:
     - name: Checkout code
@@ -16,8 +16,8 @@ jobs:
       with:
         submodules: recursive
     
-    - name: Setup Visual Studio
-      uses: microsoft/setup-msbuild@v2
+    - name: Setup Visual Studio Dev Environment
+      uses: seanmiddleditch/gha-setup-vsdevenv@master
     
     - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v1.14
@@ -25,7 +25,7 @@ jobs:
         cmake-version: '3.15'
     
     - name: Configure CMake
-      run: cmake -B build -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B build -G "Visual Studio 16 2019" -A x64
     
     - name: Build
       run: cmake --build build --config Release
